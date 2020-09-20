@@ -11,6 +11,26 @@ const {
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
+const mongoose = require("mongoose");
+
+//Import Routes
+const messagesRoute = require('./routes/messages');
+
+//Middleware
+app.use(express.json());
+app.use('/messages', messagesRoute);
+
+//ROUTES
+app.get("/api", (req, res) => {
+  res.send("We are on api");
+});
+
+//Connect to DB
+mongoose.connect(
+  `${process.env.DB_CONNECTION}`,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  () => console.log("connected to db!")
+);
 
 // Run when client connects
 io.on("connection", socket => {

@@ -50,5 +50,9 @@ module.exports = {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
-  telemetry: false
+  telemetry: false,
+  // env config
+  privateRuntimeConfig: {
+    dbConnection: process.env.DB_CONNECTION
+  }
 };
