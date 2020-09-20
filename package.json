@@ -1,0 +1,24 @@
+{
+  "name": "grocery-list-family",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/pwa": "^3.0.2",
+    "core-js": "^3.6.5",
+    "cross-env": "^7.0.2",
+    "nuxt": "^2.14.5",
+    "socket.io": "^2.3.0",
+    "vue-socket.io": "^3.0.10"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.11.2",
+    "nodemon": "^2.0.4"
+  }
+}
