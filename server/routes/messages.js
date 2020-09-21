@@ -13,6 +13,7 @@ router.get("/", async (req, res) => {
 });
 
 //SUBMIT A MESSAGE
+
 router.post("/", async (req, res) => {
   const message = new Message({
     username: req.body.username,
