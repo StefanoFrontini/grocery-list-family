@@ -92,3 +92,6 @@ sw.*
 # vscode
 .editorconfig
 jsconfig.json
+
+# env
+.env

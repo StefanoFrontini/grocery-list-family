@@ -12,13 +12,14 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 const mongoose = require("mongoose");
+require('dotenv/config');
 
 //Import Routes
-const messagesRoute = require('./routes/messages');
+const messagesRoute = require("./routes/messages");
 
 //Middleware
 app.use(express.json());
-app.use('/messages', messagesRoute);
+app.use("/messages", messagesRoute);
 
 //ROUTES
 app.get("/api", (req, res) => {
@@ -26,11 +27,15 @@ app.get("/api", (req, res) => {
 });
 
 //Connect to DB
-mongoose.connect(
-  `${process.env.DB_CONNECTION}`,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  () => console.log("connected to db!")
-);
+mongoose
+  .connect(process.env.DB_CONNECTION, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => console.log("connected to db!"))
+  .catch(err =>
+    console.log(`Could not connect to db ${process.env.DB_CONNECTION}`, err)
+  );
 
 // Run when client connects
 io.on("connection", socket => {
