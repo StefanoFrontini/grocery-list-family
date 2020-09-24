@@ -5,7 +5,7 @@ const Message = require("../models/Message");
 //GET ALL MESSAGES
 router.get("/", async (req, res) => {
   try {
-    const messages = await Message.find();
+    const messages = await Message.find();    
     res.json(messages);
   } catch (err) {
     res.json({ message: err });
@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
 // SPECIFIC ROOM
 router.get("/:roomName", async (req, res) => {
   try {
-    const room = await Message.find({ room: req.params.roomName });
+    const room = await Message.find({ room: req.params.roomName });    
     res.json(room);
   } catch (err) {
     res.json({ message: err });

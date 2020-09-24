@@ -41,8 +41,7 @@ mongoose
 
 // Run when client connects
 io.on("connection", socket => {
-  socket.on("joinRoom", data => {
-    console.log(data);
+  socket.on("joinRoom", data => {    
     const user = userJoin(socket.id, data.username, data.room);
     socket.join(user.room);
     // Welcome current user

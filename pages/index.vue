@@ -29,10 +29,10 @@ export default {
     submit() {
       this.$router.push("/chat");
 
-      console.log("Message sent to server:", {
-        username: this.name,
-        room: this.room
-      });
+      //console.log("Message sent to server:", {
+      //  username: this.name,
+      //  room: this.room
+      //});
       setTimeout(() => {
         this.$socket.emit("joinRoom", {
           username: this.name,
