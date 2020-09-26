@@ -70,6 +70,7 @@ io.on("connection", socket => {
   socket.on("disconnect", () => {
     const user = userLeave(socket.id);
     if (user) {
+      //socket.leave(user.room);
       console.log(`User ${user.username} has left the chat`);
       io.to(user.room).emit(
         "message",

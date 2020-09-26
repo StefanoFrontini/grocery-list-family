@@ -27,6 +27,7 @@
 
 <script>
 export default {
+  
   data() {
     return {
       messages: [],
@@ -93,6 +94,7 @@ export default {
   mounted() {
     setTimeout( async () => {
       console.log('room:' , this.room);
+      console.log('username:' , this.username);
       let saved_messages = await this.$axios
       .$get(`http://localhost:3000/messages/${this.room}`);
 
@@ -117,6 +119,11 @@ export default {
     this.format_messages = format_messages;
 
     }, 100)
+
+    if (this.username == "") {
+      console.log('mounted-username: ', this.username);
+      //this.$router.push("/");
+    }
 
   }
 };
