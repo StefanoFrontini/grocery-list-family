@@ -82,6 +82,7 @@ export default {
   computed: {
     ...mapState(["user"])
   },
+  middleware: "auth",
   created() {
     this.joinRoom(this.user);
   },
