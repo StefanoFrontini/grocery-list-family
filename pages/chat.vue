@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-btn color="error" icon class="mx-1" @click="exit">Logout</v-btn>
     <p>Username: {{ username }}</p>
     <p>Room: {{ room }}</p>
     <p>Users:</p>
@@ -26,16 +27,16 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
-  
   data() {
     return {
       messages: [],
       text: "",
       room: "",
       users: [],
-      username: "",
-      format_messages: ""
+      username: ""
+      //format_messages: ""
     };
   },
   /*   async asyncData({ $axios }) {
@@ -60,6 +61,11 @@ export default {
     return { format_messages };
   }, */
   methods: {
+    ...mapActions(["joinRoom", "getMessages", "leftRoom"]),
+    exit() {
+      this.leftRoom();
+      this.$router.push("/?message=leftChat");
+    },
     sendMessage(e) {
       this.$socket.emit("messageToServer", this.text);
       this.$axios
@@ -78,6 +84,15 @@ export default {
         });
     }
   },
+  computed: {
+    ...mapState(["user", "format_messages"])
+  },
+  middleware: "auth",
+  created() {
+    this.joinRoom(this.user);
+    this.getMessages();
+  },
+
   sockets: {
     connect() {},
     message(data) {
@@ -90,41 +105,46 @@ export default {
     user(data) {
       this.username = data.username;
     }
-  },
-  mounted() {
-    setTimeout( async () => {
-      console.log('room:' , this.room);
-      console.log('username:' , this.username);
-      let saved_messages = await this.$axios
-      .$get(`http://localhost:3000/messages/${this.room}`);
+  }
 
-    console.log('saved_messages', saved_messages);
+  /*   mounted() {
+    setTimeout(async () => {
+      console.log("room:", this.room);
+      console.log("username:", this.username);
+      let saved_messages = await this.$axios.$get(
+        `http://localhost:3000/messages/${this.room}`
+      );
 
-    function formatDate(item) {
-      const options = { year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "numeric" };
-      const new_item = {
-        room: item.room,
-        text: item.text,
-        username: item.username,
-        _id: item._id,
-        __v: item.__v,
-        date: new Intl.DateTimeFormat("it-IT", options).format(
-          new Date(item.date)
-        )
-      };
-      return new_item;
-    }
-    const format_messages = saved_messages.map(formatDate);
+      console.log("saved_messages", saved_messages);
 
-    this.format_messages = format_messages;
+      function formatDate(item) {
+        const options = {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric"
+        };
+        const new_item = {
+          room: item.room,
+          text: item.text,
+          username: item.username,
+          _id: item._id,
+          __v: item.__v,
+          date: new Intl.DateTimeFormat("it-IT", options).format(
+            new Date(item.date)
+          )
+        };
+        return new_item;
+      }
+      const format_messages = saved_messages.map(formatDate);
 
-    }, 100)
+      this.format_messages = format_messages;
+    }, 100);
 
     if (this.username == "") {
-      console.log('mounted-username: ', this.username);
+      console.log("mounted-username: ", this.username);
       //this.$router.push("/");
-    }
-
-  }
+    } */
 };
 </script>
