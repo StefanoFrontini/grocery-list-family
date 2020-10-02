@@ -77,6 +77,7 @@ export const actions = {
     const { user } = state;
     if (Object.values(user).length) {
       dispatch("createUser", user);
+      dispatch("getMessages");
       dispatch("joinRoom");
     }
   }
