@@ -34,8 +34,8 @@ export default {
       text: "",
       room: "",
       users: [],
-      username: "",
-      format_messages: ""
+      username: ""
+      //format_messages: ""
     };
   },
   /*   async asyncData({ $axios }) {
@@ -60,7 +60,7 @@ export default {
     return { format_messages };
   }, */
   methods: {
-    ...mapActions(["joinRoom"]),
+    ...mapActions(["joinRoom", "getMessages"]),
     sendMessage(e) {
       this.$socket.emit("messageToServer", this.text);
       this.$axios
@@ -80,11 +80,12 @@ export default {
     }
   },
   computed: {
-    ...mapState(["user"])
+    ...mapState(["user", "format_messages"])
   },
   middleware: "auth",
   created() {
     this.joinRoom(this.user);
+    this.getMessages();
   },
 
   sockets: {
@@ -99,8 +100,9 @@ export default {
     user(data) {
       this.username = data.username;
     }
-  },
-  mounted() {
+  }
+
+  /*   mounted() {
     setTimeout(async () => {
       console.log("room:", this.room);
       console.log("username:", this.username);
@@ -138,7 +140,6 @@ export default {
     if (this.username == "") {
       console.log("mounted-username: ", this.username);
       //this.$router.push("/");
-    }
-  }
+    } */
 };
 </script>
