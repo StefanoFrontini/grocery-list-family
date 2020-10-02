@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-btn color="error" icon class="mx-1" @click="exit">Logout</v-btn>
     <p>Username: {{ username }}</p>
     <p>Room: {{ room }}</p>
     <p>Users:</p>
@@ -60,7 +61,11 @@ export default {
     return { format_messages };
   }, */
   methods: {
-    ...mapActions(["joinRoom", "getMessages"]),
+    ...mapActions(["joinRoom", "getMessages", "leftRoom"]),
+    exit() {
+      this.leftRoom();
+      this.$router.push("/?message=leftChat");
+    },
     sendMessage(e) {
       this.$socket.emit("messageToServer", this.text);
       this.$axios

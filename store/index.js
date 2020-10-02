@@ -13,6 +13,9 @@ export const mutations = {
   },
   setMessages(state, messages) {
     state.format_messages = messages;
+  },
+  clearData(state) {
+    state.user = {};
   }
 };
 
@@ -30,9 +33,17 @@ export const actions = {
       payload: user
     });
   },
+  leftRoom({ dispatch, commit }) {
+    dispatch("socketEmit", {
+      action: "leftChat",
+      payload: null
+    });
+    commit("clearData");
+  },
   async getMessages({ state, commit }) {
+    const { user } = state;
     const response = await axios.get(
-      `http://localhost:3000/messages/${state.user.room}`
+      `http://localhost:3000/messages/${user.room}`
     );
     const saved_messages = response.data;
 
@@ -61,5 +72,12 @@ export const actions = {
     const format_messages = saved_messages.map(formatDate);
 
     commit("setMessages", format_messages);
+  },
+  SOCKET_reconnect({ state, dispatch }) {
+    const { user } = state;
+    if (Object.values(user).length) {
+      dispatch("createUser", user);
+      dispatch("joinRoom");
+    }
   }
 };

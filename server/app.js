@@ -12,7 +12,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 const mongoose = require("mongoose");
-require('dotenv/config');
+require("dotenv/config");
 
 //Import Routes
 const messagesRoute = require("./routes/messages");
@@ -41,7 +41,7 @@ mongoose
 
 // Run when client connects
 io.on("connection", socket => {
-  socket.on("joinRoom", data => {    
+  socket.on("joinRoom", data => {
     const user = userJoin(socket.id, data.username, data.room);
     socket.join(user.room);
     // Welcome current user
@@ -69,12 +69,30 @@ io.on("connection", socket => {
   // Runs when client disconnects
   socket.on("disconnect", () => {
     const user = userLeave(socket.id);
+    console.log("disconnect-User:", user);
     if (user) {
       //socket.leave(user.room);
       console.log(`User ${user.username} has left the chat`);
       io.to(user.room).emit(
         "message",
         `User ${user.username} has left the chat`
+      );
+      // Send users and room info
+      io.to(user.room).emit("roomUsers", {
+        room: user.room,
+        users: getRoomUsers(user.room)
+      });
+    }
+  });
+  // Runs when client leaves the room
+  socket.on("leftChat", () => {
+    const user = userLeave(socket.id);
+    if (user) {
+      //socket.leave(user.room);
+      console.log(`User ${user.username} has left the room`);
+      io.to(user.room).emit(
+        "message",
+        `User ${user.username} has left the room`
       );
       // Send users and room info
       io.to(user.room).emit("roomUsers", {
