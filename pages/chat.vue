@@ -5,12 +5,17 @@
     <p>Room: {{ room }}</p>
     <p>Users:</p>
     <p v-for="user in users" :key="user.id">{{ user.username }}</p>
-    <v-form @submit.prevent="sendMessage">
+    <v-form ref="form" @submit.prevent="sendMessage">
       <v-text-field
         v-model="text"
-        type="text"
-        placeholder="Enter message"
-      ></v-text-field>
+        label="Message..."
+        outlined
+        :rules="rules"
+        append-icon="mdi-send-circle-outline"
+        @input="typing"
+        @click:append="sendMessage"
+        @blur="resetValidation"
+      />
     </v-form>
     <p v-for="(message, index) in messages" :key="`message-${index}`">
       {{ message }}
@@ -35,7 +40,8 @@ export default {
       text: "",
       room: "",
       users: [],
-      username: ""
+      username: "",
+      rules: [v => !!v || "Text is required"]
       //format_messages: ""
     };
   },
@@ -67,21 +73,28 @@ export default {
       this.$router.push("/?message=leftChat");
     },
     sendMessage(e) {
-      this.$socket.emit("messageToServer", this.text);
-      this.$axios
-        .post("http://localhost:3000/messages", {
-          username: this.username,
-          text: this.text,
-          room: this.room
-        })
-        .then(response => {
-          if (response.data._id) {
-            console.log("record created");
-          }
-        })
-        .catch(error => {
-          console.log("record not created", error);
-        });
+      if (this.$refs.form.validate()) {
+        this.$socket.emit("messageToServer", this.text);
+        this.$axios
+          .post("http://localhost:3000/messages", {
+            username: this.username,
+            text: this.text,
+            room: this.room
+          })
+          .then(response => {
+            if (response.data._id) {
+              console.log("record created");
+            }
+          })
+          .catch(error => {
+            console.log("record not created", error);
+          });
+        this.text = "";
+        this.resetValidation();
+      }
+    },
+    resetValidation() {
+      this.$refs.form.resetValidation();
     }
   },
   computed: {
