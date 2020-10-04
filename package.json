@@ -14,8 +14,8 @@
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.10.6",
-    "nuxt": "^2.14.5",
+    "mongoose": "^5.10.7",
+    "nuxt": "^2.14.6",
     "socket.io": "^2.3.0",
     "vue-socket.io": "^3.0.10"
   },

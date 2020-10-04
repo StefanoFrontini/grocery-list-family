@@ -48,6 +48,7 @@ import { mapActions } from "vuex";
 import Snackbar from "@/components/Snackbar";
 import messageDict from "@/utils/messageDict";
 export default {
+  layout: "login",
   components: {
     Snackbar
   },

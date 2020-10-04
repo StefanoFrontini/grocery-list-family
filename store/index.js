@@ -14,6 +14,7 @@ export const mutations = {
   setMessages(state, messages) {
     state.format_messages = messages;
   },
+
   clearData(state) {
     state.user = {};
   }
@@ -22,6 +23,28 @@ export const mutations = {
 export const actions = {
   socketEmit(_, { action, payload }) {
     return this._vm.$socket.emit(action, payload);
+  },
+  async createMessage({ state, dispatch }, msg) {
+    const { user } = state;
+    const response = await axios
+      .post("http://localhost:3000/messages", {
+        username: user.username,
+        text: msg,
+        room: user.room
+      })
+      .then(response => {
+        if (response.data._id) {
+          console.log("record created");
+        }
+      })
+      .catch(error => {
+        console.log("record not created", error);
+      });
+    dispatch("socketEmit", {
+      action: "messageToServer",
+      payload: msg
+    });
+    dispatch("getMessages");
   },
   createUser({ commit }, user) {
     commit("setUser", user);
@@ -46,8 +69,6 @@ export const actions = {
       `http://localhost:3000/messages/${user.room}`
     );
     const saved_messages = response.data;
-
-    console.log("saved_messages", saved_messages);
 
     function formatDate(item) {
       const options = {
