@@ -16,19 +16,32 @@
       {{ message }}
     </p>
     <p>Saved messages:</p>
-    <v-card class="mx-auto" max-width="400" tile>
+    <v-card class="mx-auto" max-width="800" outlined>
       <v-list-item
-        two-line
+        three-line
         v-for="(message, index) in format_messages"
         :key="`saved_message-${index}`"
       >
         <v-list-item-content>
-          <v-list-item-title v-text="message.text"></v-list-item-title>
+          <v-list-item-title>
+            <span :class="{ line: message.isDone }">{{
+              message.text
+            }}</span></v-list-item-title
+          >
           <v-list-item-subtitle
-            >Inserito da: {{ message.username }} il
+            >Aggiunto da {{ message.username }} il
             {{ message.date }}</v-list-item-subtitle
           >
         </v-list-item-content>
+        <v-btn
+          @click="markDone(message)"
+          elevation="2"
+          color="primary"
+          class="mx-2"
+          small
+          >Fatto</v-btn
+        >
+        <v-btn elevation="2" color="error" small>Cancella</v-btn>
       </v-list-item>
     </v-card>
   </div>
@@ -50,7 +63,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getMessages", "createMessage"]),
+    markDone(message) {
+      this.updateMessage(message._id);
+    },
+    ...mapActions(["getMessages", "createMessage", "updateMessage"]),
     sendMessage(e) {
       if (this.$refs.form.validate()) {
         this.createMessage(this.text);
@@ -84,3 +100,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.line {
+  text-decoration: line-through;
+}
+</style>

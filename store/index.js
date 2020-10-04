@@ -46,6 +46,26 @@ export const actions = {
     });
     dispatch("getMessages");
   },
+  async updateMessage({ state, dispatch }, id) {
+    const { user } = state;
+    const response = await axios
+      .patch(`http://localhost:3000/messages/${id}`, {
+        isDone: true
+      })
+      .then(response => {
+        if (response.data._id) {
+          console.log("record updated");
+        }
+      })
+      .catch(error => {
+        console.log("record not updated", error);
+      });
+    dispatch("socketEmit", {
+      action: "messageToServer",
+      payload: id
+    });
+    dispatch("getMessages");
+  },
   createUser({ commit }, user) {
     commit("setUser", user);
   },
@@ -82,6 +102,7 @@ export const actions = {
         room: item.room,
         text: item.text,
         username: item.username,
+        isDone: item.isDone,
         _id: item._id,
         __v: item.__v,
         date: new Intl.DateTimeFormat("it-IT", options).format(
