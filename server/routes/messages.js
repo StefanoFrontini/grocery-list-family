@@ -51,7 +51,7 @@ router.get("/:roomName", async (req, res) => {
 // DELETE MESSAGE
 router.delete("/:messageId", async (req, res) => {
   try {
-    const message = await Message.remove({ _id: req.params.messageId });
+    const message = await Message.deleteOne({ _id: req.params.messageId });
     res.json(message);
   } catch (err) {
     res.json({ message: err });

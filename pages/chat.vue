@@ -36,12 +36,14 @@
         <v-btn
           @click="markDone(message)"
           elevation="2"
-          color="primary"
+          :color="message.isDone ? '#BDBDBD' : 'primary'"
           class="mx-2"
           small
-          >Fatto</v-btn
+          >{{ message.isDone ? "Back" : "Fatto" }}</v-btn
         >
-        <v-btn elevation="2" color="error" small>Cancella</v-btn>
+        <v-btn @click="markDelete(message)" elevation="2" color="error" small
+          >Cancella</v-btn
+        >
       </v-list-item>
     </v-card>
   </div>
@@ -64,9 +66,22 @@ export default {
 
   methods: {
     markDone(message) {
-      this.updateMessage(message._id);
+      if (message.isDone) {
+        this.updateMessageFalse(message._id);
+      } else {
+        this.updateMessageTrue(message._id);
+      }
     },
-    ...mapActions(["getMessages", "createMessage", "updateMessage"]),
+    markDelete(message) {
+      this.deleteMessage(message._id);
+    },
+    ...mapActions([
+      "getMessages",
+      "createMessage",
+      "updateMessageTrue",
+      "updateMessageFalse",
+      "deleteMessage"
+    ]),
     sendMessage(e) {
       if (this.$refs.form.validate()) {
         this.createMessage(this.text);

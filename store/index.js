@@ -46,7 +46,7 @@ export const actions = {
     });
     dispatch("getMessages");
   },
-  async updateMessage({ state, dispatch }, id) {
+  async updateMessageTrue({ state, dispatch }, id) {
     const { user } = state;
     const response = await axios
       .patch(`http://localhost:3000/messages/${id}`, {
@@ -59,6 +59,44 @@ export const actions = {
       })
       .catch(error => {
         console.log("record not updated", error);
+      });
+    dispatch("socketEmit", {
+      action: "messageToServer",
+      payload: id
+    });
+    dispatch("getMessages");
+  },
+  async updateMessageFalse({ state, dispatch }, id) {
+    const { user } = state;
+    const response = await axios
+      .patch(`http://localhost:3000/messages/${id}`, {
+        isDone: false
+      })
+      .then(response => {
+        if (response.data._id) {
+          console.log("record updated");
+        }
+      })
+      .catch(error => {
+        console.log("record not updated", error);
+      });
+    dispatch("socketEmit", {
+      action: "messageToServer",
+      payload: id
+    });
+    dispatch("getMessages");
+  },
+  async deleteMessage({ state, dispatch }, id) {
+    const { user } = state;
+    const response = await axios
+      .delete(`http://localhost:3000/messages/${id}`)
+      .then(response => {
+        if (response.data._id) {
+          console.log("record deleted");
+        }
+      })
+      .catch(error => {
+        console.log("record not deleted", error);
       });
     dispatch("socketEmit", {
       action: "messageToServer",
