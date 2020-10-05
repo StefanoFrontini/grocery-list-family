@@ -126,7 +126,12 @@ export const actions = {
     const response = await axios.get(
       `http://localhost:3000/messages/${user.room}`
     );
+
     const saved_messages = response.data;
+
+    const sorted_messages = saved_messages.sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
 
     function formatDate(item) {
       const options = {
@@ -149,7 +154,7 @@ export const actions = {
       };
       return new_item;
     }
-    const format_messages = saved_messages.map(formatDate);
+    const format_messages = sorted_messages.map(formatDate);
 
     commit("setMessages", format_messages);
   },

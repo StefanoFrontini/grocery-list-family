@@ -3,7 +3,8 @@
     <v-form ref="form" @submit.prevent="sendMessage">
       <v-text-field
         v-model="text"
-        label="Message..."
+        label="Cosa devo comprare?"
+        placeholder="Inserisci qui quello che ti manca"
         outlined
         :rules="rules"
         append-icon="mdi-send-circle-outline"
@@ -36,7 +37,7 @@
         <v-btn
           @click="markDone(message)"
           elevation="2"
-          :color="message.isDone ? '#BDBDBD' : 'primary'"
+          :color="message.isDone ? 'grey' : 'primary'"
           class="mx-2"
           small
           >{{ message.isDone ? "Back" : "Fatto" }}</v-btn
@@ -60,6 +61,7 @@ export default {
       room: "",
 
       username: "",
+      id: "",
       rules: [v => !!v || "Text is required"]
     };
   },
@@ -104,13 +106,6 @@ export default {
     message(data) {
       this.messages.push(data);
       this.getMessages();
-    },
-    roomUsers(data) {
-      this.room = data.room;
-      this.users = data.users;
-    },
-    user(data) {
-      this.username = data.username;
     }
   }
 };

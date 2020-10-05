@@ -52,7 +52,11 @@ io.on("connection", socket => {
     socket.join(user.room);
     // Welcome current user
     socket.emit("message", "Welcome to grocery list");
-    socket.emit("user", { username: user.username });
+    socket.emit("user", {
+      username: user.username,
+      id: user.id,
+      room: user.room
+    });
     // Broadcast when a user connects
     socket.broadcast
       .to(user.room)

@@ -10,16 +10,16 @@
         <v-subheader>Users in room</v-subheader>
 
         <v-list-item
-          v-for="(user, index) in users"
+          v-for="(item, index) in users"
           :key="`user-${index}`"
           @click.prevent
         >
           <v-list-item-content>
-            <v-list-item-title v-text="user.username" />
+            <v-list-item-title v-text="item.username" />
           </v-list-item-content>
 
           <v-list-item-icon>
-            <v-icon>
+            <v-icon :color="user.id === item.id ? 'primary' : 'grey'">
               mdi-account-circle-outline
             </v-icon>
           </v-list-item-icon>
@@ -35,6 +35,7 @@
           {{ user.room }}
         </v-chip>
       </v-toolbar-title>
+
       <v-spacer />
       <v-btn icon class="mx-1" @click="exit">
         <v-icon>mdi-exit-to-app</v-icon>
@@ -55,9 +56,7 @@ export default {
   data() {
     return {
       drawer: true,
-      room: "",
-      users: [],
-      username: ""
+      users: []
     };
   },
   computed: {
@@ -69,7 +68,7 @@ export default {
     this.getMessages();
   },
   methods: {
-    ...mapActions(["joinRoom", "leftRoom", "getMessages"]),
+    ...mapActions(["joinRoom", "leftRoom", "getMessages", "createUser"]),
     exit() {
       this.leftRoom();
       this.$router.push("/?message=leftChat");
@@ -77,11 +76,10 @@ export default {
   },
   sockets: {
     roomUsers(data) {
-      this.room = data.room;
       this.users = data.users;
     },
     user(data) {
-      this.username = data.username;
+      this.createUser(data);
     }
   }
 };
