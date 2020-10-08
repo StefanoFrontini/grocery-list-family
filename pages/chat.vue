@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p class="text-h4 text-center">Lista della spesa</p>
     <v-form ref="form" @submit.prevent="sendMessage">
       <v-text-field
         v-model="text"
@@ -16,7 +17,7 @@
     <p v-for="(message, index) in messages" :key="`message-${index}`">
       {{ message }}
     </p>
-    <p>Saved messages:</p>
+
     <v-card class="mx-auto" max-width="800" outlined>
       <v-list-item
         three-line
@@ -104,7 +105,7 @@ export default {
   sockets: {
     connect() {},
     message(data) {
-      this.messages.push(data);
+      //this.messages.push(data);
       this.getMessages();
     }
   }

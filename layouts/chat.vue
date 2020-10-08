@@ -7,7 +7,7 @@
       color="$accent"
     >
       <v-list subheader>
-        <v-subheader>Users in room</v-subheader>
+        <v-subheader>Utenti nella stanza</v-subheader>
 
         <v-list-item
           v-for="(item, index) in users"
@@ -30,11 +30,12 @@
     <v-app-bar app color="#424242">
       <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-toolbar-title>
-        Room
+        Stanza
         <v-chip color="grey">
           {{ user.room }}
         </v-chip>
       </v-toolbar-title>
+      <v-spacer />
 
       <v-spacer />
       <v-btn icon class="mx-1" @click="exit">

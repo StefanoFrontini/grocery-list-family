@@ -73,13 +73,12 @@ io.on("connection", socket => {
   // Listen for messageToServer
   socket.on("messageToServer", data => {
     const user = getCurrentUser(socket.id);
-    console.log(`Message received from ${user.username}: ${data}`);
+    //console.log(`Message received from ${user.username}: ${data}`);
     io.to(user.room).emit("message", `User ${user.username} said: ${data}`);
   });
   // Runs when client disconnects
   socket.on("disconnect", () => {
     const user = userLeave(socket.id);
-    console.log("disconnect-User:", user);
     if (user) {
       //socket.leave(user.room);
       console.log(`User ${user.username} has left the chat`);

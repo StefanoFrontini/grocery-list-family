@@ -3,9 +3,12 @@
     <v-col cols="auto">
       <v-card min-width="290" color="#424242">
         <Snackbar v-model="snackbar" :text="message" />
+        <v-card-title>
+          <h1>Lista della spesa</h1>
+        </v-card-title>
 
         <v-card-title>
-          <h2>Login</h2>
+          <h3>Entra</h3>
         </v-card-title>
         <v-card-text>
           <v-form
@@ -18,14 +21,14 @@
               v-model="user.username"
               :counter="16"
               :rules="nameRules"
-              label="Name"
+              label="Nome"
               required
             />
             <v-text-field
               v-model="user.room"
               :counter="16"
               :rules="roomRules"
-              label="Enter the room"
+              label="Inserisci la stanza"
               required
             />
             <v-btn
@@ -60,12 +63,12 @@ export default {
         username: ""
       },
       nameRules: [
-        v => !!v || "Name is required",
-        v => (v && v.length <= 16) || "Name must be less than 16 characters"
+        v => !!v || "Campo obbligatorio",
+        v => (v && v.length <= 16) || "Deve essere inferiore ai 16 caratteri"
       ],
       roomRules: [
-        v => !!v || "Enter the room",
-        v => (v && v.length <= 16) || "Room must be less than 16 characters"
+        v => !!v || "Campo obbligatorio",
+        v => (v && v.length <= 16) || "Deve essere inferiore ai 16 caratteri"
       ],
       snackbar: false
     };
@@ -83,16 +86,10 @@ export default {
   methods: {
     ...mapActions(["createUser"]),
     submit() {
-      this.createUser(this.user);
-      this.$router.push("/chat");
-
-      //console.log("Message sent to server:", {
-      //  username: this.name,
-      //  room: this.room
-      //});
-      /*  setTimeout(() => {
-        this.$socket.emit("joinRoom", this.user);
-      }, 100); */
+      if (this.$refs.form.validate()) {
+        this.createUser(this.user);
+        this.$router.push("/chat");
+      }
     }
   },
   head: {
