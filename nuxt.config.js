@@ -36,7 +36,7 @@ module.exports = {
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    baseURL: process.env.APP_API
+    baseURL: `http://localhost:${process.env.PORT || 3000}`
   },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
