@@ -27,7 +27,7 @@ export const actions = {
   async createMessage({ state, dispatch }, msg) {
     const { user } = state;
     const response = await axios
-      .post("http://localhost:3000/messages", {
+      .post("/messages", {
         username: user.username,
         text: msg,
         room: user.room
@@ -49,7 +49,7 @@ export const actions = {
   async updateMessageTrue({ state, dispatch }, id) {
     const { user } = state;
     const response = await axios
-      .patch(`http://localhost:3000/messages/${id}`, {
+      .patch(`/messages/${id}`, {
         isDone: true
       })
       .then(response => {
@@ -69,7 +69,7 @@ export const actions = {
   async updateMessageFalse({ state, dispatch }, id) {
     const { user } = state;
     const response = await axios
-      .patch(`http://localhost:3000/messages/${id}`, {
+      .patch(`/messages/${id}`, {
         isDone: false
       })
       .then(response => {
@@ -89,7 +89,7 @@ export const actions = {
   async deleteMessage({ state, dispatch }, id) {
     const { user } = state;
     const response = await axios
-      .delete(`http://localhost:3000/messages/${id}`)
+      .delete(`/messages/${id}`)
       .then(response => {
         if (response.data._id) {
           console.log("record deleted");
@@ -123,9 +123,7 @@ export const actions = {
   },
   async getMessages({ state, commit }) {
     const { user } = state;
-    const response = await axios.get(
-      `http://localhost:3000/messages/${user.room}`
-    );
+    const response = await axios.get(`/messages/${user.room}`);
 
     const saved_messages = response.data;
 
