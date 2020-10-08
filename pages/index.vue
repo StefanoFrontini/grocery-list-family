@@ -93,7 +93,7 @@ export default {
     }
   },
   head: {
-    title: "Grocery List Family Edition"
+    title: "Lista della spesa"
   }
 };
 </script>

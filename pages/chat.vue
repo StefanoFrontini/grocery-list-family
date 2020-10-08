@@ -63,7 +63,7 @@ export default {
 
       username: "",
       id: "",
-      rules: [v => !!v || "Text is required"]
+      rules: [v => !!v || "Testo richiesto"]
     };
   },
 

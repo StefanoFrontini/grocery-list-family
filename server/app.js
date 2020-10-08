@@ -50,6 +50,7 @@ io.on("connection", socket => {
   socket.on("joinRoom", data => {
     const user = userJoin(socket.id, data.username, data.room);
     socket.join(user.room);
+    console.log(`User ${user.username} has joined the room: ${user.room}`);
     // Welcome current user
     socket.emit("message", "Welcome to grocery list");
     socket.emit("user", {
@@ -60,7 +61,10 @@ io.on("connection", socket => {
     // Broadcast when a user connects
     socket.broadcast
       .to(user.room)
-      .emit("message", `User ${user.username} has joined the chat`);
+      .emit(
+        "message",
+        `User ${user.username} has joined the room: ${user.room}`
+      );
 
     // Send users and room info
 
@@ -80,11 +84,11 @@ io.on("connection", socket => {
   socket.on("disconnect", () => {
     const user = userLeave(socket.id);
     if (user) {
-      //socket.leave(user.room);
-      console.log(`User ${user.username} has left the chat`);
+      socket.leave(user.room);
+      console.log(`User ${user.username} has left the room: ${user.room}`);
       io.to(user.room).emit(
         "message",
-        `User ${user.username} has left the chat`
+        `User ${user.username} has left the room: ${user.room}`
       );
       // Send users and room info
       io.to(user.room).emit("roomUsers", {
@@ -97,11 +101,11 @@ io.on("connection", socket => {
   socket.on("leftChat", () => {
     const user = userLeave(socket.id);
     if (user) {
-      //socket.leave(user.room);
-      console.log(`User ${user.username} has left the room`);
+      socket.leave(user.room);
+      console.log(`User ${user.username} has left the room: ${user.room}`);
       io.to(user.room).emit(
         "message",
-        `User ${user.username} has left the room`
+        `User ${user.username} has left the room: ${user.room}`
       );
       // Send users and room info
       io.to(user.room).emit("roomUsers", {
