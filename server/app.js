@@ -5,7 +5,7 @@ const {
   userJoin,
   getCurrentUser,
   userLeave,
-  getRoomUsers
+  getRoomUsers,
 } = require("../utils/users");
 
 const app = express();
@@ -33,49 +33,49 @@ app.use("/messages", messagesRoute);
 mongoose
   .connect(process.env.DB_CONNECTION, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
   .then(() =>
     consola.ready({
       message: "Connected to DB!",
-      badge: true
+      badge: true,
     })
   )
-  .catch(err =>
+  .catch((err) =>
     console.log(`Could not connect to DB ${process.env.DB_CONNECTION}`, err)
   );
 
 // Run when client connects
-io.on("connection", socket => {
-  socket.on("joinRoom", data => {
+io.on("connection", (socket) => {
+  socket.on("joinRoom", (data) => {
     const user = userJoin(socket.id, data.username, data.room);
     socket.join(user.room);
-    console.log(`User ${user.username} has joined the room: ${user.room}`);
+    //console.log(`User ${user.username} has joined the room: ${user.room}`);
     // Welcome current user
-    socket.emit("message", "Welcome to grocery list");
+    //socket.emit("message", "Welcome to grocery list");
     socket.emit("user", {
       username: user.username,
       id: user.id,
-      room: user.room
+      room: user.room,
     });
     // Broadcast when a user connects
-    socket.broadcast
-      .to(user.room)
-      .emit(
-        "message",
-        `User ${user.username} has joined the room: ${user.room}`
-      );
+    //socket.broadcast
+    //  .to(user.room)
+    //  .emit(
+    //    "message",
+    //    `User ${user.username} has joined the room: ${user.room}`
+    //  );
 
     // Send users and room info
 
     io.to(user.room).emit("roomUsers", {
       room: user.room,
-      users: getRoomUsers(user.room)
+      users: getRoomUsers(user.room),
     });
   });
 
   // Listen for messageToServer
-  socket.on("messageToServer", data => {
+  socket.on("messageToServer", (data) => {
     const user = getCurrentUser(socket.id);
     //console.log(`Message received from ${user.username}: ${data}`);
     io.to(user.room).emit("message", `User ${user.username} said: ${data}`);
@@ -85,15 +85,15 @@ io.on("connection", socket => {
     const user = userLeave(socket.id);
     if (user) {
       socket.leave(user.room);
-      console.log(`User ${user.username} has left the room: ${user.room}`);
-      io.to(user.room).emit(
-        "message",
-        `User ${user.username} has left the room: ${user.room}`
-      );
+      //console.log(`User ${user.username} has left the room: ${user.room}`);
+      //io.to(user.room).emit(
+      //  "message",
+      //  `User ${user.username} has left the room: ${user.room}`
+      //);
       // Send users and room info
       io.to(user.room).emit("roomUsers", {
         room: user.room,
-        users: getRoomUsers(user.room)
+        users: getRoomUsers(user.room),
       });
     }
   });
@@ -102,15 +102,15 @@ io.on("connection", socket => {
     const user = userLeave(socket.id);
     if (user) {
       socket.leave(user.room);
-      console.log(`User ${user.username} has left the room: ${user.room}`);
-      io.to(user.room).emit(
-        "message",
-        `User ${user.username} has left the room: ${user.room}`
-      );
+      //console.log(`User ${user.username} has left the room: ${user.room}`);
+      //io.to(user.room).emit(
+      //  "message",
+      //  `User ${user.username} has left the room: ${user.room}`
+      //);
       // Send users and room info
       io.to(user.room).emit("roomUsers", {
         room: user.room,
-        users: getRoomUsers(user.room)
+        users: getRoomUsers(user.room),
       });
     }
   });
@@ -118,5 +118,5 @@ io.on("connection", socket => {
 
 module.exports = {
   app,
-  server
+  server,
 };

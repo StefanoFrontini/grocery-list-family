@@ -1,5 +1,5 @@
 <template>
-  <v-app style="background: #303030;">
+  <v-app style="background: #303030">
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -44,7 +44,7 @@
     </v-app-bar>
 
     <v-main>
-      <v-container fluid style="height: 100%;">
+      <v-container fluid style="height: 100%">
         <nuxt />
       </v-container>
     </v-main>
@@ -57,23 +57,22 @@ export default {
   data() {
     return {
       drawer: true,
-      users: []
+      users: [],
     };
   },
   computed: {
-    ...mapState(["user", "format_messages"])
+    ...mapState(["user"]),
   },
   middleware: "auth",
   created() {
     this.joinRoom(this.user);
-    this.getMessages();
   },
   methods: {
-    ...mapActions(["joinRoom", "leftRoom", "getMessages", "createUser"]),
+    ...mapActions(["joinRoom", "leftRoom", "createUser"]),
     exit() {
       this.leftRoom();
       this.$router.push("/?message=leftChat");
-    }
+    },
   },
   sockets: {
     roomUsers(data) {
@@ -81,7 +80,7 @@ export default {
     },
     user(data) {
       this.createUser(data);
-    }
-  }
+    },
+  },
 };
 </script>
