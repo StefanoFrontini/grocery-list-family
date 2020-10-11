@@ -7,9 +7,6 @@
           <h1>Lista della spesa</h1>
         </v-card-title>
 
-        <v-card-title>
-          <h3>Entra</h3>
-        </v-card-title>
         <v-card-text>
           <v-form
             ref="form"
@@ -37,7 +34,7 @@
               class="mt-3"
               type="submit"
             >
-              Submit
+              Entra
             </v-btn>
           </v-form>
         </v-card-text>
@@ -53,31 +50,31 @@ import messageDict from "@/utils/messageDict";
 export default {
   layout: "login",
   components: {
-    Snackbar
+    Snackbar,
   },
   data() {
     return {
       isValid: true,
       user: {
         room: "",
-        username: ""
+        username: "",
       },
       nameRules: [
-        v => !!v || "Campo obbligatorio",
-        v => (v && v.length <= 16) || "Deve essere inferiore ai 16 caratteri"
+        (v) => !!v || "Campo obbligatorio",
+        (v) => (v && v.length <= 16) || "Deve essere inferiore ai 16 caratteri",
       ],
       roomRules: [
-        v => !!v || "Campo obbligatorio",
-        v => (v && v.length <= 16) || "Deve essere inferiore ai 16 caratteri"
+        (v) => !!v || "Campo obbligatorio",
+        (v) => (v && v.length <= 16) || "Deve essere inferiore ai 16 caratteri",
       ],
-      snackbar: false
+      snackbar: false,
     };
   },
   computed: {
     message() {
       const { message } = this.$route.query;
       return messageDict[message] || "";
-    }
+    },
   },
   mounted() {
     this.snackbar = !!this.message;
@@ -90,10 +87,10 @@ export default {
         this.createUser(this.user);
         this.$router.push("/chat");
       }
-    }
+    },
   },
   head: {
-    title: "Lista della spesa"
-  }
+    title: "Lista della spesa",
+  },
 };
 </script>

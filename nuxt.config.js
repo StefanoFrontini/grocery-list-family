@@ -1,14 +1,14 @@
 module.exports = {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: "%s - grocery-list",
-    title: "grocery-list",
+    titleTemplate: "%s",
+    title: "Lista della spesa",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" }
+      { hid: "description", name: "description", content: "" },
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -23,7 +23,7 @@ module.exports = {
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
-    "@nuxtjs/vuetify"
+    "@nuxtjs/vuetify",
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -31,12 +31,12 @@ module.exports = {
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
     // https://go.nuxtjs.dev/pwa
-    "@nuxtjs/pwa"
+    "@nuxtjs/pwa",
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    baseURL: `http://localhost:${process.env.PORT || 3000}`
+    baseURL: `http://localhost:${process.env.PORT || 3000}`,
   },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
@@ -45,12 +45,12 @@ module.exports = {
     theme: {
       dark: true,
       themes: {
-        dark: {}
-      }
-    }
+        dark: {},
+      },
+    },
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
-  telemetry: false
+  telemetry: false,
 };

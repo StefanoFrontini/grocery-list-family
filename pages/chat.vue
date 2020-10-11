@@ -14,9 +14,9 @@
       />
     </v-form>
 
-    <p v-for="(message, index) in messages" :key="`message-${index}`">
+    <!--<p v-for="(message, index) in messages" :key="`message-${index}`">
       {{ message }}
-    </p>
+    </p> -->
 
     <v-card class="mx-auto" max-width="800" outlined>
       <v-list-item
@@ -35,16 +35,17 @@
             {{ message.date }}</v-list-item-subtitle
           >
         </v-list-item-content>
+
         <v-btn
           @click="markDone(message)"
           elevation="2"
           :color="message.isDone ? 'grey' : 'primary'"
           class="mx-2"
           small
-          >{{ message.isDone ? "Back" : "Fatto" }}</v-btn
+          >{{ message.isDone ? "Torna" : "Fatto" }}</v-btn
         >
         <v-btn @click="markDelete(message)" elevation="2" color="error" small
-          >Cancella</v-btn
+          >Canc</v-btn
         >
       </v-list-item>
     </v-card>
@@ -63,7 +64,7 @@ export default {
 
       username: "",
       id: "",
-      rules: [v => !!v || "Testo richiesto"]
+      rules: [(v) => !!v || "Testo richiesto"],
     };
   },
 
@@ -83,7 +84,7 @@ export default {
       "createMessage",
       "updateMessageTrue",
       "updateMessageFalse",
-      "deleteMessage"
+      "deleteMessage",
     ]),
     sendMessage(e) {
       if (this.$refs.form.validate()) {
@@ -94,21 +95,21 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation();
-    }
+    },
   },
   created() {
     this.getMessages();
   },
   computed: {
-    ...mapState(["format_messages"])
+    ...mapState(["format_messages"]),
   },
   sockets: {
     connect() {},
     message(data) {
       //this.messages.push(data);
       this.getMessages();
-    }
-  }
+    },
+  },
 };
 </script>
 
