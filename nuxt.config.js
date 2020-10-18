@@ -36,18 +36,45 @@ module.exports = {
   ],
   i18n: {
     locales: ["it", "en"],
-    defaultLocale: "it",
+    defaultLocale: "en",
     vueI18n: {
       fallbackLocale: "it",
       messages: {
+        it: {
+          title: "Lista della spesa",
+          entra: "Entra",
+          nome: "Nome",
+          inserisciStanza: "Inserisci la stanza",
+          stanza: "stanza",
+          obbligatorio: "Campo obbligatorio",
+          caratteri: "Deve essere inferiore ai 16 caratteri",
+          torna: "Torna",
+          fatto: "Fatto",
+          aggiunto: "Aggiunto da",
+          il: "il",
+          comprare: "Cosa devo comprare?",
+          manca: "Inserisci qui quello che ti manca",
+          utenti: "Utenti nella stanza",
+          inserisci: "Inserisci nome e stanza",
+          lascia: "Hai lasciato la stanza"
+        },
         en: {
-          welcome: "Welcome"
-        },
-        fr: {
-          welcome: "Bienvenue"
-        },
-        es: {
-          welcome: "Bienvenido"
+          title: "Grocery list",
+          entra: "Submit",
+          nome: "Name",
+          inserisciStanza: "Enter the room",
+          stanza: "room",
+          obbligatorio: "Required",
+          caratteri: "Must be less than 16 characters",
+          torna: "Back",
+          fatto: "Done",
+          aggiunto: "Added by",
+          il: "on",
+          comprare: "What do I have to buy?",
+          manca: "Enter here what you are missing",
+          utenti: "Users in room",
+          inserisci: "Enter room and name",
+          lascia: "You left the room"
         }
       }
     }

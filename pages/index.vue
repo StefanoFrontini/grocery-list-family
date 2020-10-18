@@ -4,7 +4,7 @@
       <v-card min-width="290" color="#424242">
         <Snackbar v-model="snackbar" :text="message" />
         <v-card-title>
-          <h1>Lista della spesa</h1>
+          <h1>{{ $t("title") }}</h1>
         </v-card-title>
 
         <v-card-text>
@@ -18,14 +18,14 @@
               v-model="user.username"
               :counter="16"
               :rules="nameRules"
-              label="Nome"
+              :label="$t('nome')"
               required
             />
             <v-text-field
               v-model="user.room"
               :counter="16"
               :rules="roomRules"
-              label="Inserisci la stanza"
+              :label="$t('inserisciStanza')"
               required
             />
             <v-btn
@@ -34,7 +34,7 @@
               class="mt-3"
               type="submit"
             >
-              Entra
+              {{ $t("entra") }}
             </v-btn>
           </v-form>
         </v-card-text>
@@ -50,31 +50,31 @@ import messageDict from "@/utils/messageDict";
 export default {
   layout: "login",
   components: {
-    Snackbar,
+    Snackbar
   },
   data() {
     return {
       isValid: true,
       user: {
         room: "",
-        username: "",
+        username: ""
       },
       nameRules: [
-        (v) => !!v || "Campo obbligatorio",
-        (v) => (v && v.length <= 16) || "Deve essere inferiore ai 16 caratteri",
+        v => !!v || this.$t("obbligatorio"),
+        v => (v && v.length <= 16) || this.$t("caratteri")
       ],
       roomRules: [
-        (v) => !!v || "Campo obbligatorio",
-        (v) => (v && v.length <= 16) || "Deve essere inferiore ai 16 caratteri",
+        v => !!v || this.$t("obbligatorio"),
+        v => (v && v.length <= 16) || this.$t("caratteri")
       ],
-      snackbar: false,
+      snackbar: false
     };
   },
   computed: {
     message() {
       const { message } = this.$route.query;
       return messageDict[message] || "";
-    },
+    }
   },
   mounted() {
     this.snackbar = !!this.message;
@@ -87,10 +87,10 @@ export default {
         this.createUser(this.user);
         this.$router.push("/chat");
       }
-    },
+    }
   },
   head: {
-    title: "Lista della spesa",
-  },
+    title: "Lista della spesa"
+  }
 };
 </script>

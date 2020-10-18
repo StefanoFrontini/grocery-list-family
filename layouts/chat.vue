@@ -7,7 +7,7 @@
       color="$accent"
     >
       <v-list subheader>
-        <v-subheader>Utenti nella stanza</v-subheader>
+        <v-subheader>{{ $t("utenti") }}</v-subheader>
 
         <v-list-item
           v-for="(item, index) in users"
@@ -30,7 +30,7 @@
     <v-app-bar app color="#424242">
       <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-toolbar-title>
-        Stanza
+        {{ $t("stanza") }}
         <v-chip color="grey">
           {{ user.room }}
         </v-chip>
@@ -57,11 +57,11 @@ export default {
   data() {
     return {
       drawer: true,
-      users: [],
+      users: []
     };
   },
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user"])
   },
   middleware: "auth",
   created() {
@@ -72,7 +72,7 @@ export default {
     exit() {
       this.leftRoom();
       this.$router.push("/?message=leftChat");
-    },
+    }
   },
   sockets: {
     roomUsers(data) {
@@ -80,7 +80,7 @@ export default {
     },
     user(data) {
       this.createUser(data);
-    },
-  },
+    }
+  }
 };
 </script>
