@@ -3,6 +3,12 @@
     <v-col cols="auto">
       <v-card min-width="290" color="#424242">
         <Snackbar v-model="snackbar" :text="message" />
+        <nuxt-link
+          v-for="locale in availableLocales"
+          :key="locale.code"
+          :to="switchLocalePath(locale.code)"
+          >{{ locale.name }}</nuxt-link
+        >
         <v-card-title>
           <h1>{{ $t("title") }}</h1>
         </v-card-title>
@@ -74,6 +80,9 @@ export default {
     message() {
       const { message } = this.$route.query;
       return messageDict[message] || "";
+    },
+    availableLocales() {
+      return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale);
     }
   },
   mounted() {

@@ -34,6 +34,14 @@
         <v-chip color="grey">
           {{ user.room }}
         </v-chip>
+        <v-chip color="secondary">
+          <nuxt-link
+            v-for="locale in availableLocales"
+            :key="locale.code"
+            :to="switchLocalePath(locale.code)"
+            >{{ locale.name }}</nuxt-link
+          >
+        </v-chip>
       </v-toolbar-title>
       <v-spacer />
 
@@ -61,7 +69,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user"])
+    ...mapState(["user"]),
+    availableLocales() {
+      return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale);
+    }
   },
   middleware: "auth",
   created() {
