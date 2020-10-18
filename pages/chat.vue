@@ -1,11 +1,11 @@
 <template>
   <div>
-    <p class="text-h4 text-center">Lista della spesa</p>
+    <p class="text-h4 text-center">{{ $t("title") }}</p>
     <v-form ref="form" @submit.prevent="sendMessage">
       <v-text-field
         v-model="text"
-        label="Cosa devo comprare?"
-        placeholder="Inserisci qui quello che ti manca"
+        :label="$t('comprare')"
+        :placeholder="$t('manca')"
         outlined
         :rules="rules"
         append-icon="mdi-send-circle-outline"
@@ -31,7 +31,7 @@
             }}</span></v-list-item-title
           >
           <v-list-item-subtitle
-            >Aggiunto da {{ message.username }} il
+            >{{ $t("aggiunto") }} {{ message.username }} {{ $t("il") }}
             {{ message.date }}</v-list-item-subtitle
           >
         </v-list-item-content>
@@ -42,7 +42,7 @@
           :color="message.isDone ? 'grey' : 'primary'"
           class="mx-2"
           small
-          >{{ message.isDone ? "Torna" : "Fatto" }}</v-btn
+          >{{ message.isDone ? $t("torna") : $t("fatto") }}</v-btn
         >
         <v-btn @click="markDelete(message)" elevation="2" color="error" small
           >Canc</v-btn
@@ -64,7 +64,7 @@ export default {
 
       username: "",
       id: "",
-      rules: [(v) => !!v || "Testo richiesto"],
+      rules: [v => !!v || this.$t("obbligatorio")]
     };
   },
 
@@ -84,7 +84,7 @@ export default {
       "createMessage",
       "updateMessageTrue",
       "updateMessageFalse",
-      "deleteMessage",
+      "deleteMessage"
     ]),
     sendMessage(e) {
       if (this.$refs.form.validate()) {
@@ -95,21 +95,21 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation();
-    },
+    }
   },
   created() {
     this.getMessages();
   },
   computed: {
-    ...mapState(["format_messages"]),
+    ...mapState(["format_messages"])
   },
   sockets: {
     connect() {},
     message(data) {
       //this.messages.push(data);
       this.getMessages();
-    },
-  },
+    }
+  }
 };
 </script>
 
