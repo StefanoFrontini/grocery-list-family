@@ -16,6 +16,7 @@
     "dotenv": "^8.2.0",
     "mongoose": "^5.10.8",
     "nuxt": "^2.14.6",
+    "nuxt-i18n": "^6.15.3",
     "socket.io": "^2.3.0",
     "vue-socket.io": "^3.0.10"
   },
