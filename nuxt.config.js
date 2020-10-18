@@ -36,7 +36,7 @@ module.exports = {
   ],
   i18n: {
     locales: ["it", "en"],
-    defaultLocale: "en",
+    defaultLocale: "it",
     vueI18n: {
       fallbackLocale: "it",
       messages: {
