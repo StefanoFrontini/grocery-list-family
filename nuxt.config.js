@@ -1,3 +1,5 @@
+const redirectSSL = require("redirect-ssl");
+
 module.exports = {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -6,7 +8,11 @@ module.exports = {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" }
+      {
+        hid: "description",
+        name: "description",
+        content: "Lista della spesa per la famiglia"
+      }
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
@@ -34,6 +40,11 @@ module.exports = {
     "@nuxtjs/pwa",
     "nuxt-i18n"
   ],
+  pwa: {
+    meta: {
+      theme_color: "#000000"
+    }
+  },
   i18n: {
     locales: [
       { code: "it", name: "Italiano" },
@@ -100,5 +111,10 @@ module.exports = {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
-  telemetry: false
+  telemetry: false,
+  serverMiddleware: [
+    redirectSSL.create({
+      enabled: process.env.NODE_ENV === "production"
+    })
+  ]
 };
