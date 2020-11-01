@@ -57,8 +57,8 @@ module.exports = {
         it: {
           title: "Lista della spesa",
           entra: "Entra",
-          nome: "Nome",
-          inserisciStanza: "Inserisci la stanza",
+          nome: "Nome utente",
+          inserisciStanza: "Inserisci il nome della lista",
           stanza: "stanza",
           obbligatorio: "Campo obbligatorio",
           caratteri: "Deve essere inferiore ai 16 caratteri",
@@ -75,8 +75,8 @@ module.exports = {
         en: {
           title: "Grocery list",
           entra: "Submit",
-          nome: "Name",
-          inserisciStanza: "Enter the room",
+          nome: "Your name",
+          inserisciStanza: "Enter the list name",
           stanza: "room",
           obbligatorio: "Required",
           caratteri: "Must be less than 16 characters",
@@ -110,7 +110,9 @@ module.exports = {
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {},
+  build: {
+    //analyze: true
+  },
   telemetry: false,
   serverMiddleware: [
     redirectSSL.create({

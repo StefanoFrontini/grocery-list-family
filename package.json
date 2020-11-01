@@ -14,7 +14,7 @@
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.10.9",
+    "mongoose": "^5.10.11",
     "nuxt": "^2.14.7",
     "nuxt-i18n": "^6.15.4",
     "redirect-ssl": "^2.0.0",
