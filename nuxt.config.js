@@ -69,7 +69,7 @@ module.exports = {
           comprare: "Cosa devo comprare?",
           manca: "Inserisci qui quello che ti manca",
           utenti: "Utenti nella stanza",
-          inserisci: "Inserisci nome e stanza",
+          inserisci: "Inserisci il tuo nome e il nome della lista",
           lascia: "Hai lasciato la stanza"
         },
         en: {
